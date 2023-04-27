@@ -117,6 +117,9 @@ class BugzillaBridge extends BridgeAbstract
             $item['content'] = $comment['text'];
             if (isset($comment['is_markdown']) and $comment['is_markdown']) {
                 $item['content'] = markdownToHtml($item['content']);
+            } else {
+                // Convert plain text comment to HTML
+                $item['content'] = nl2br(htmlspecialchars($item['content']));
             }
             if (!is_null($comment['attachment_id'])) {
                 $item['enclosures'] = [$this->instance . '/attachment.cgi?id=' . $comment['attachment_id']];
